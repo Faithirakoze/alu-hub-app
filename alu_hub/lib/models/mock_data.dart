@@ -179,8 +179,8 @@ const List<CommunityPost> mockCommunityPosts = [
     authorName: 'Kofi Mensah',
     authorRole: 'STUDENT',
     timeAgo: '3 hours ago',
-    content: 'Just finished the Flutter worksho. honestly one of the best sessions this semester. '
-        'Big thanks to the facilitators! Who else is building their capstone in Flutter? 🙌',
+    content: 'Just finished the Flutter workshop. Honestly, one of the best sessions this semester. '
+        'Big thanks to the facilitators',
     likes: 19,
     comments: 7,
     isPinned: false,
