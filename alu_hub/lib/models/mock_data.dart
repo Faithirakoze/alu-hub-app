@@ -179,8 +179,8 @@ const List<CommunityPost> mockCommunityPosts = [
     authorName: 'Kofi Mensah',
     authorRole: 'STUDENT',
     timeAgo: '3 hours ago',
-    content: 'Just finished the Flutter worksho. honestly one of the best sessions this semester. '
-        'Big thanks to the facilitators! Who else is building their capstone in Flutter? 🙌',
+    content: 'Just finished the Flutter workshop. honestly one of the best sessions this semester. '
+         'Highly recommend everyone to attend the next one!',
     likes: 19,
     comments: 7,
     isPinned: false,
@@ -191,3 +191,4 @@ const List<CommunityPost> mockCommunityPosts = [
 
 const List<String> feedCategories = ['All', 'Events', 'Career', 'Finance', 'Wellness', 'Social'];
 const List<String> communityTabs = ['Announcements', 'Discussion', 'Opportunities'];
+ 
