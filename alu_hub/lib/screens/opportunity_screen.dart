@@ -38,11 +38,11 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
 
   Color get _categoryColor {
     switch (widget.opportunity.category.toUpperCase()) {
-      case 'CAREER':   return const Color(0xFF4A90D9);
-      case 'FINANCE':  return const Color(0xFFF5A623);
-      case 'SOCIAL':   return const Color(0xFF7ED321);
-      case 'WELLNESS': return const Color(0xFF9B59B6);
-      default:         return const Color(0xFF4A90D9);
+      case 'CAREER':   return const Color(0xFF1B2B4B); 
+      case 'FINANCE':  return const Color(0xFFF5A623); 
+      case 'SOCIAL':   return const Color(0xFF7ED321); 
+      case 'WELLNESS': return const Color(0xFF9B59B6); 
+      default:         return const Color(0xFF1B2B4B);
     }
   }
 
@@ -51,15 +51,14 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
     final op = widget.opportunity;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1C30),
-      body: Stack(
+      backgroundColor: const Color(0xFFF4F6F8), 
         children: [
           CustomScrollView(
             slivers: [
               SliverAppBar(
                 expandedHeight: 220,
                 pinned: true,
-                backgroundColor: const Color(0xFF1B2B4B),
+                backgroundColor: const Color(0xFF0B1B3D),
                 leading: IconButton(
                   icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
                   onPressed: () => Navigator.pop(context),
@@ -87,8 +86,8 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              _categoryColor.withOpacity(0.6),
-                              const Color(0xFF1B2B4B),
+                              _categoryColor.withOpacity(0.4),
+                              const Color(0xFF0B1B3D),
                             ],
                           ),
                         ),
@@ -96,23 +95,22 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                           child: Icon(
                             Icons.event,
                             size: 64,
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.white.withOpacity(0.2),
                           ),
                         ),
                       ),
-                      // Bottom fade
                       Positioned(
                         bottom: 0,
                         left: 0,
                         right: 0,
                         child: Container(
                           height: 80,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             gradient: LinearGradient(
                               begin: Alignment.bottomCenter,
                               end: Alignment.topCenter,
                               colors: [
-                                const Color(0xFF0F1C30),
+                                Color(0xFFF4F6F8),
                                 Colors.transparent,
                               ],
                             ),
@@ -127,11 +125,11 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
               // Main content
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Tags row
+                      // Tags row style variants
                       Wrap(
                         spacing: 8,
                         children: [
@@ -140,44 +138,35 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                             _TagChip(label: op.tier, color: const Color(0xFFF5A623)),
                         ],
                       ),
-                      const SizedBox(height: 10),
-
-                      // Title
+                      const SizedBox(height: 14),
                       Text(
                         op.title,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Color(0xFF0B1B3D), 
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                           height: 1.3,
                         ),
                       ),
                       const SizedBox(height: 16),
-
-                      // Date
                       _InfoRow(
                         icon: Icons.calendar_today_outlined,
                         text: op.date,
                       ),
                       const SizedBox(height: 8),
 
-                      // Location
                       _InfoRow(
                         icon: Icons.location_on_outlined,
                         text: op.location,
                       ),
                       const SizedBox(height: 16),
-
-                      // Divider
-                      Divider(color: Colors.white.withOpacity(0.1)),
+                      Divider(color: Colors.black.withOpacity(0.08)),
                       const SizedBox(height: 12),
-
-                      // Organizer row
                       Row(
                         children: [
                           CircleAvatar(
                             radius: 20,
-                            backgroundColor: _categoryColor.withOpacity(0.3),
+                            backgroundColor: _categoryColor.withOpacity(0.1),
                             child: Icon(Icons.groups, color: _categoryColor, size: 20),
                           ),
                           const SizedBox(width: 10),
@@ -187,44 +176,41 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                               children: [
                                 Text(
                                   op.organizer,
-                                  style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
+                                  style: const TextStyle(color: Color(0xFF0B1B3D), fontSize: 13, fontWeight: FontWeight.w600),
                                 ),
-                                const Text('Organizer', style: TextStyle(color: Colors.white38, fontSize: 11)),
+                                const Text('Organizer', style: TextStyle(color: Colors.black45, fontSize: 11)),
                               ],
                             ),
                           ),
                           OutlinedButton(
                             onPressed: () {},
                             style: OutlinedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              side: BorderSide(color: Colors.white.withOpacity(0.3)),
+                              foregroundColor: const Color(0xFF0B1B3D),
+                              side: const BorderSide(color: Color(0xFF0B1B3D), width: 1.2),
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               minimumSize: Size.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            child: const Text('Follow', style: TextStyle(fontSize: 12)),
+                            child: const Text('Follow', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
                           ),
                         ],
                       ),
                       const SizedBox(height: 16),
-
-                      // Hashtags
                       Wrap(
                         spacing: 6,
                         runSpacing: 4,
                         children: op.tags.map((tag) => Text(
                           tag,
-                          style: TextStyle(color: _categoryColor, fontSize: 13),
+                          style: TextStyle(color: _categoryColor, fontSize: 13, fontWeight: FontWeight.w500),
                         )).toList(),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 24),
 
-                      // About section
                       const Text(
                         'About this opportunity',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Color(0xFF0B1B3D),
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -233,24 +219,23 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                       Text(
                         op.description,
                         style: const TextStyle(
-                          color: Colors.white70,
+                          color: Color(0xFF2C3E50),
                           fontSize: 14,
                           height: 1.6,
                         ),
                       ),
                       const SizedBox(height: 24),
 
-                      // Registered count + progress
                       Row(
                         children: [
                           Text(
                             '$_registeredCount registered',
-                            style: const TextStyle(color: Colors.white70, fontSize: 13),
+                            style: const TextStyle(color: Color(0xFF2C3E50), fontSize: 13, fontWeight: FontWeight.w500),
                           ),
                           const Spacer(),
                           Text(
                             'Out of ${op.totalSlots} spots',
-                            style: const TextStyle(color: Colors.white38, fontSize: 12),
+                            style: const TextStyle(color: Colors.black45, fontSize: 12),
                           ),
                         ],
                       ),
@@ -259,7 +244,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                         borderRadius: BorderRadius.circular(4),
                         child: LinearProgressIndicator(
                           value: _fillRatio,
-                          backgroundColor: Colors.white12,
+                          backgroundColor: Colors.black.withOpacity(0.06),
                           valueColor: AlwaysStoppedAnimation<Color>(
                             _fillRatio > 0.8 ? Colors.redAccent : const Color(0xFFF5A623),
                           ),
@@ -269,7 +254,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                       const SizedBox(height: 6),
                       Text(
                         '${((_fillRatio) * 100).toStringAsFixed(0)}% full',
-                        style: const TextStyle(color: Colors.white38, fontSize: 11),
+                        style: const TextStyle(color: Colors.black45, fontSize: 11),
                       ),
                     ],
                   ),
@@ -278,7 +263,6 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
             ],
           ),
 
-          // RSVP button
           Positioned(
             bottom: 0,
             left: 0,
@@ -286,11 +270,11 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
             child: Container(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
               decoration: BoxDecoration(
-                color: const Color(0xFF0F1C30),
+                color: Colors.white, 
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.4),
-                    blurRadius: 12,
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 16,
                     offset: const Offset(0, -4),
                   ),
                 ],
@@ -302,9 +286,9 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                   onPressed: _toggleRSVP,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _hasRSVPd
-                        ? Colors.white12
-                        : const Color(0xFFF5A623),
-                    foregroundColor: _hasRSVPd ? Colors.white : Colors.black,
+                        ? Colors.black.withOpacity(0.05)
+                        : const Color(0xFFF5A623), 
+                    foregroundColor: _hasRSVPd ? const Color(0xFF0B1B3D) : Colors.black,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     elevation: 0,
                   ),
@@ -332,7 +316,6 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
   }
 }
 
-
 class _TagChip extends StatelessWidget {
   final String label;
   final Color color;
@@ -343,11 +326,11 @@ class _TagChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withOpacity(0.08),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.4)),
+        border: Border.all(color: color.withOpacity(0.2)),
       ),
-      child: Text(label, style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w600)),
+      child: Text(label, style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.bold)),
     );
   }
 }
@@ -362,10 +345,10 @@ class _InfoRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: Colors.white38, size: 16),
+        Icon(icon, color: Colors.black38, size: 16),
         const SizedBox(width: 8),
         Expanded(
-          child: Text(text, style: const TextStyle(color: Colors.white70, fontSize: 13)),
+          child: Text(text, style: const TextStyle(color: Color(0xFF2C3E50), fontSize: 13, fontWeight: FontWeight.w400)),
         ),
       ],
     );

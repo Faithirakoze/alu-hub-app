@@ -12,12 +12,11 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  
   final List<Map<String, dynamic>> _communities = [
-    {'name': 'ALU Software Engineering', 'members': '1,260', 'icon': Icons.code, 'color': Color(0xFF4A90D9), 'isJoined': true},
-    {'name': 'ALU Entrepreneurs Hub', 'members': '843', 'icon': Icons.lightbulb_outline, 'color': Color(0xFFF5A623), 'isJoined': false},
-    {'name': 'Student Wellness Circle', 'members': '512', 'icon': Icons.self_improvement, 'color': Color(0xFF9B59B6), 'isJoined': true},
-    {'name': 'ALU Finance & Grants', 'members': '390', 'icon': Icons.account_balance_outlined, 'color': Color(0xFF7ED321), 'isJoined': false},
+    {'name': 'ALU Software Engineering', 'members': '1,260', 'icon': Icons.code, 'color': const Color(0xFF1B2B4B), 'isJoined': true},
+    {'name': 'ALU Entrepreneurs Hub', 'members': '843', 'icon': Icons.lightbulb_outline, 'color': const Color(0xFF1B2B4B), 'isJoined': false},
+    {'name': 'Student Wellness Circle', 'members': '512', 'icon': Icons.self_improvement, 'color': const Color(0xFF1B2B4B), 'isJoined': true},
+    {'name': 'ALU Finance & Grants', 'members': '390', 'icon': Icons.account_balance_outlined, 'color': const Color(0xFF1B2B4B), 'isJoined': false},
   ];
 
   int _activeCommunityIndex = 0;
@@ -44,10 +43,11 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
   }
   Widget _buildCommunityList() {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1C30),
+      backgroundColor: const Color(0xFFF4F6F8),
       appBar: AppBar(
-        title: const Text('Communities', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFF1B2B4B),
+        title: const Text('Communities', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        backgroundColor: const Color(0xFF0B1B3D), 
+        iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(icon: const Icon(Icons.search), onPressed: () {}),
         ],
@@ -57,7 +57,7 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
         children: [
           const Text(
             'Your Communities',
-            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Color(0xFF0B1B3D), fontSize: 18, fontWeight: FontWeight.bold), 
           ),
           const SizedBox(height: 12),
           ..._communities
@@ -71,10 +71,10 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
                       });
                     },
                   )),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           const Text(
             'Discover Communities',
-            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Color(0xFF0B1B3D), fontSize: 18, fontWeight: FontWeight.bold), 
           ),
           const SizedBox(height: 12),
           ..._communities
@@ -99,9 +99,10 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
     final community = _communities[_activeCommunityIndex];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1C30),
+      backgroundColor: const Color(0xFFF4F6F8), 
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1B2B4B),
+        backgroundColor: const Color(0xFF0B1B3D), 
+        iconTheme: const IconThemeData(color: Colors.white),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () => setState(() => _isInCommunity = false),
@@ -111,11 +112,11 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
           children: [
             Text(
               community['name'],
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             Text(
               '${community['members']} Members',
-              style: const TextStyle(fontSize: 11, color: Colors.white54),
+              style: const TextStyle(fontSize: 11, color: Colors.white70),
             ),
           ],
         ),
@@ -127,7 +128,7 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
           controller: _tabController,
           indicatorColor: const Color(0xFFF5A623),
           labelColor: const Color(0xFFF5A623),
-          unselectedLabelColor: Colors.white54,
+          unselectedLabelColor: Colors.white70,
           labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
           tabs: communityTabs.map((t) => Tab(text: t)).toList(),
         ),
@@ -136,10 +137,9 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
         controller: _tabController,
         children: communityTabs.map((tab) => _PostList(tab: tab)).toList(),
       ),
-      // Floating action button 
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFF5A623),
-        foregroundColor: Colors.black,
+        backgroundColor: const Color(0xFF0B1B3D), 
+        foregroundColor: Colors.white,
         onPressed: () => _showPostDialog(context),
         child: const Icon(Icons.edit),
       ),
@@ -149,7 +149,7 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
   void _showPostDialog(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: const Color(0xFF1B2B4B),
+      backgroundColor: const Color(0xFF0B1B3D),
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -172,7 +172,7 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
                 hintText: 'Share something with the community...',
                 hintStyle: const TextStyle(color: Colors.white38),
                 filled: true,
-                fillColor: const Color(0xFF0F1C30),
+                fillColor: const Color(0xFF1B2B4B),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,
@@ -212,9 +212,9 @@ class _PostList extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.inbox_outlined, color: Colors.white24, size: 48),
+            const Icon(Icons.inbox_outlined, color: Colors.black26, size: 48),
             const SizedBox(height: 8),
-            Text('No $tab yet', style: const TextStyle(color: Colors.white38)),
+            Text('No $tab yet', style: const TextStyle(color: Colors.black38)),
           ],
         ),
       );
@@ -249,7 +249,7 @@ class _PostCardState extends State<_PostCard> {
     switch (widget.post.authorRole) {
       case 'ADMIN':   return const Color(0xFFF5A623);
       case 'FACULTY': return const Color(0xFF4A90D9);
-      default:        return Colors.white54;
+      default:        return Colors.black54;
     }
   }
 
@@ -259,8 +259,15 @@ class _PostCardState extends State<_PostCard> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFF1B2B4B),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
         border: widget.post.isPinned
             ? Border.all(color: const Color(0xFFF5A623).withOpacity(0.4))
             : null,
@@ -272,7 +279,7 @@ class _PostCardState extends State<_PostCard> {
             children: [
               CircleAvatar(
                 radius: 18,
-                backgroundColor: _roleColor.withOpacity(0.2),
+                backgroundColor: _roleColor.withOpacity(0.1),
                 child: Text(
                   widget.post.authorName[0],
                   style: TextStyle(color: _roleColor, fontWeight: FontWeight.bold),
@@ -287,14 +294,14 @@ class _PostCardState extends State<_PostCard> {
                       children: [
                         Text(
                           widget.post.authorName,
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 13),
+                          style: const TextStyle(color: Color(0xFF0B1B3D), fontWeight: FontWeight.w600, fontSize: 13),
                         ),
                         const SizedBox(width: 6),
                         if (widget.post.authorRole != 'STUDENT')
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
                             decoration: BoxDecoration(
-                              color: _roleColor.withOpacity(0.2),
+                              color: _roleColor.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
@@ -305,7 +312,7 @@ class _PostCardState extends State<_PostCard> {
                       ],
                     ),
                     if (widget.post.timeAgo.isNotEmpty)
-                      Text(widget.post.timeAgo, style: const TextStyle(color: Colors.white38, fontSize: 11)),
+                      Text(widget.post.timeAgo, style: const TextStyle(color: Colors.black38, fontSize: 11)),
                   ],
                 ),
               ),
@@ -316,7 +323,7 @@ class _PostCardState extends State<_PostCard> {
           const SizedBox(height: 10),
           Text(
             widget.post.content,
-            style: const TextStyle(color: Colors.white, fontSize: 13, height: 1.5),
+            style: const TextStyle(color: Color(0xFF2C3E50), fontSize: 13, height: 1.5),
           ),
           const SizedBox(height: 12),
           Row(
@@ -330,14 +337,14 @@ class _PostCardState extends State<_PostCard> {
                   children: [
                     Icon(
                       _liked ? Icons.favorite : Icons.favorite_border,
-                      color: _liked ? Colors.redAccent : Colors.white38,
+                      color: _liked ? Colors.redAccent : Colors.black38,
                       size: 18,
                     ),
                     const SizedBox(width: 4),
                     Text(
                       '$_likes',
                       style: TextStyle(
-                        color: _liked ? Colors.redAccent : Colors.white38,
+                        color: _liked ? Colors.redAccent : Colors.black38,
                         fontSize: 13,
                       ),
                     ),
@@ -347,15 +354,15 @@ class _PostCardState extends State<_PostCard> {
               const SizedBox(width: 16),
               Row(
                 children: [
-                  const Icon(Icons.chat_bubble_outline, color: Colors.white38, size: 18),
+                  const Icon(Icons.chat_bubble_outline, color: Colors.black38, size: 18),
                   const SizedBox(width: 4),
-                  Text('${widget.post.comments}', style: const TextStyle(color: Colors.white38, fontSize: 13)),
+                  Text('${widget.post.comments}', style: const TextStyle(color: Colors.black38, fontSize: 13)),
                 ],
               ),
               const Spacer(),
               GestureDetector(
                 onTap: () {},
-                child: const Icon(Icons.share_outlined, color: Colors.white38, size: 18),
+                child: const Icon(Icons.share_outlined, color: Colors.black38, size: 18),
               ),
             ],
           ),
@@ -383,31 +390,39 @@ class _CommunityListTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.all(14),
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFF1B2B4B),
-          borderRadius: BorderRadius.circular(14),
+          color: Colors.white, // Matches the bright resource container cards in Pic 1
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Row(
           children: [
             CircleAvatar(
               radius: 22,
-              backgroundColor: (community['color'] as Color).withOpacity(0.2),
-              child: Icon(community['icon'] as IconData, color: community['color'] as Color),
+              backgroundColor: const Color(0xFFF4F6F8), // Soft neutral icon background
+              child: Icon(community['icon'] as IconData, color: const Color(0xFF0B1B3D)),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     community['name'],
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 14),
+                    style: const TextStyle(color: Color(0xFF0B1B3D), fontWeight: FontWeight.bold, fontSize: 15),
                   ),
+                  const SizedBox(height: 2),
                   Text(
                     '${community['members']} members',
-                    style: const TextStyle(color: Colors.white38, fontSize: 12),
+                    style: const TextStyle(color: Colors.black45, fontSize: 12),
                   ),
                 ],
               ),
@@ -416,17 +431,17 @@ class _CommunityListTile extends StatelessWidget {
               OutlinedButton(
                 onPressed: onJoin,
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: community['color'] as Color,
-                  side: BorderSide(color: community['color'] as Color),
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                  foregroundColor: const Color(0xFF0B1B3D),
+                  side: const BorderSide(color: Color(0xFF0B1B3D), width: 1.5),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                   minimumSize: Size.zero,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)), // Rounded outline style
                 ),
                 child: const Text('Join', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
               )
             else
-              const Icon(Icons.chevron_right, color: Colors.white38),
+              const Icon(Icons.chevron_right, color: Colors.black38),
           ],
         ),
       ),

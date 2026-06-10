@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/mock_data.dart'; 
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return matchesCategory && matchesSearch;
     }).toList();
   }
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1C30),
+      backgroundColor: const Color(0xFFF4F6F8),
       body: SafeArea(
         child: Column(
           children: [
@@ -46,13 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-   
   Widget _buildTopBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          
           CircleAvatar(
             radius: 20,
             backgroundColor: const Color(0xFFF5A623),
@@ -70,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     'Hey ${AppUser.name}',
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: Color(0xFF0B1B3D),
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -81,16 +80,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Text(
                 AppUser.program,
-                style: const TextStyle(color: Colors.white54, fontSize: 12),
+                style: const TextStyle(color: Colors.black54, fontSize: 12),
               ),
             ],
           ),
           const Spacer(),
-          // Notification bell
           Stack(
             children: [
               IconButton(
-                icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+                icon: const Icon(Icons.notifications_outlined, color: Color(0xFF0B1B3D)),
                 onPressed: () {},
               ),
               Positioned(
@@ -112,14 +110,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-   Widget _buildAlertBanner() {
+  Widget _buildAlertBanner() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: const Color(0xFFF5A623).withOpacity(0.15),
+        color: const Color(0xFFF5A623).withOpacity(0.08),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xFFF5A623).withOpacity(0.4)),
+        border: Border.all(color: const Color(0xFFF5A623).withOpacity(0.3)),
       ),
       child: Row(
         children: [
@@ -128,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const Expanded(
             child: Text(
               'Scholarship deadline in 2 days',
-              style: TextStyle(color: Color(0xFFF5A623), fontSize: 13),
+              style: TextStyle(color: Color(0xFF8A6D3B), fontSize: 13, fontWeight: FontWeight.w500),
             ),
           ),
           GestureDetector(
@@ -147,7 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Search bar
   Widget _buildSearchBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -157,8 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
         onChanged: (val) => setState(() => _searchQuery = val),
         decoration: InputDecoration(
           hintText: 'Search opportunities, events...',
-          hintStyle: const TextStyle(color: Colors.white38),
-          prefixIcon: const Icon(Icons.search, color: Colors.white38),
+          hintStyle: const TextStyle(color: Colors.white54),
+          prefixIcon: const Icon(Icons.search, color: Colors.white54),
           filled: true,
           fillColor: const Color(0xFF1B2B4B),
           border: OutlineInputBorder(
@@ -188,13 +185,14 @@ class _HomeScreenState extends State<HomeScreen> {
               duration: const Duration(milliseconds: 200),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: isSelected ? const Color(0xFFF5A623) : const Color(0xFF1B2B4B),
+                color: isSelected ? const Color(0xFF0B1B3D) : Colors.white,
                 borderRadius: BorderRadius.circular(20),
+                border: isSelected ? null : Border.all(color: const Color(0xFFE2E8F0)),
               ),
               child: Text(
                 cat,
                 style: TextStyle(
-                  color: isSelected ? Colors.black : Colors.white70,
+                  color: isSelected ? Colors.white : const Color(0xFF4A5568),
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                   fontSize: 13,
                 ),
@@ -205,12 +203,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-//Feed
+
   Widget _buildFeed() {
     final items = _filtered;
     if (items.isEmpty) {
       return const Center(
-        child: Text('No opportunities found', style: TextStyle(color: Colors.white38)),
+        child: Text('No opportunities found', style: TextStyle(color: Colors.black38)),
       );
     }
     return ListView.builder(
@@ -232,8 +230,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-//Opportunity
-
 class _OpportunityCard extends StatelessWidget {
   final Opportunity opportunity;
   final VoidCallback onTap;
@@ -247,20 +243,27 @@ class _OpportunityCard extends StatelessWidget {
 
   Color get _categoryColor {
     switch (opportunity.category.toUpperCase()) {
-      case 'CAREER':   return const Color(0xFF4A90D9);
+      case 'CAREER':   return const Color(0xFF1B2B4B);
       case 'FINANCE':  return const Color(0xFFF5A623);
       case 'SOCIAL':   return const Color(0xFF7ED321);
       case 'WELLNESS': return const Color(0xFF9B59B6);
-      default:         return const Color(0xFF4A90D9);
+      default:         return const Color(0xFF1B2B4B);
     }
   }
 
   Color get _actionColor {
     switch (opportunity.actionLabel) {
       case 'RSVP':  return const Color(0xFFF5A623);
-      case 'Apply': return const Color(0xFF4A90D9);
+      case 'Apply': return const Color(0xFF1B2B4B);
       case 'Join':  return const Color(0xFF7ED321);
       default:      return const Color(0xFFF5A623);
+    }
+  }
+
+  Color get _actionForegroundColor {
+    switch (opportunity.actionLabel) {
+      case 'Apply': return Colors.white;
+      default:      return Colors.black;
     }
   }
 
@@ -272,13 +275,19 @@ class _OpportunityCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: const Color(0xFF1B2B4B),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Category label + bookmark
             Row(
               children: [
                 Text(
@@ -295,56 +304,51 @@ class _OpportunityCard extends StatelessWidget {
                   onTap: onBookmark,
                   child: Icon(
                     opportunity.isBookmarked ? Icons.bookmark : Icons.bookmark_outline,
-                    color: opportunity.isBookmarked ? const Color(0xFFF5A623) : Colors.white38,
+                    color: opportunity.isBookmarked ? const Color(0xFFF5A623) : Colors.black26,
                     size: 20,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 6),
-            // Title
             Text(
               opportunity.title,
               style: const TextStyle(
-                color: Colors.white,
+                color: Color(0xFF0B1B3D),
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),
             ),
             const SizedBox(height: 6),
-            // Date
             Row(
               children: [
-                const Icon(Icons.calendar_today_outlined, color: Colors.white38, size: 13),
+                const Icon(Icons.calendar_today_outlined, color: Colors.black38, size: 13),
                 const SizedBox(width: 4),
-                Text(opportunity.date, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+                Text(opportunity.date, style: const TextStyle(color: Colors.black54, fontSize: 12)),
               ],
             ),
             const SizedBox(height: 2),
-            // Location
             Row(
               children: [
-                const Icon(Icons.location_on_outlined, color: Colors.white38, size: 13),
+                const Icon(Icons.location_on_outlined, color: Colors.black38, size: 13),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(
                     opportunity.location,
-                    style: const TextStyle(color: Colors.white54, fontSize: 12),
+                    style: const TextStyle(color: Colors.black54, fontSize: 12),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            // Description preview
             Text(
               opportunity.description,
-              style: const TextStyle(color: Colors.white54, fontSize: 12),
+              style: const TextStyle(color: Colors.black54, fontSize: 12),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 12),
-            
             Row(
               children: [
                 SizedBox(
@@ -355,10 +359,10 @@ class _OpportunityCard extends StatelessWidget {
                       left: i * 14.0,
                       child: CircleAvatar(
                         radius: 11,
-                        backgroundColor: const Color(0xFF0F1C30),
+                        backgroundColor: Colors.white,
                         child: CircleAvatar(
                           radius: 10,
-                          backgroundColor: const Color(0xFFF5A623).withOpacity(0.6 - i * 0.15),
+                          backgroundColor: const Color(0xFF0B1B3D).withOpacity(0.4 - i * 0.1),
                           child: Text(
                             ['A', 'B', 'C'][i],
                             style: const TextStyle(color: Colors.white, fontSize: 8),
@@ -369,12 +373,11 @@ class _OpportunityCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                // Action button
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _actionColor,
-                    foregroundColor: Colors.black,
+                    foregroundColor: _actionForegroundColor,
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     minimumSize: Size.zero,
