@@ -92,6 +92,38 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
                   )),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: const Color(0xFF0B1B3D),
+      currentIndex: 2, // Communities is index 2
+      selectedItemColor: const Color(0xFFF5A623),
+      unselectedItemColor: Colors.white.withOpacity(0.55),
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            Navigator.pushReplacementNamed(context, '/home');
+            break;
+          case 1:
+            Navigator.pushReplacementNamed(context, '/explore-resources');
+            break;
+          case 2:
+            break; // already here
+          // cases 3 & 4 when Passport and Profile are ready
+        }
+      },
+      items: const [
+        BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined), label: 'Home'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.explore_rounded), label: 'Explore'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.groups_rounded), label: 'Communities'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.badge_outlined), label: 'Passport'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline), label: 'Profile'),
+        ],
+      ),
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/mock_data.dart';
+import 'opportunity_screen.dart'; // ← fix: correct import
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,6 +45,37 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: const Color(0xFF0B1B3D),
+        currentIndex: 0,
+        selectedItemColor: const Color(0xFFF5A623),
+        unselectedItemColor: Colors.white.withOpacity(0.55),
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              break;
+            case 1:
+              Navigator.pushReplacementNamed(context, '/explore-resources');
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, '/communities');
+              break;
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.explore_rounded), label: 'Explore'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.groups_rounded), label: 'Communities'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.badge_outlined), label: 'Passport'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline), label: 'Profile'),
+        ],
+      ),
     );
   }
 
@@ -57,26 +89,21 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: const Color(0xFFF5A623),
             child: Text(
               AppUser.name[0],
-              style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Text(
-                    'Hey ${AppUser.name}',
-                    style: const TextStyle(
-                      color: Color(0xFF0B1B3D),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  const Text('', style: TextStyle(fontSize: 16)),
-                ],
+              Text(
+                'Hey ${AppUser.name} 👋',
+                style: const TextStyle(
+                  color: Color(0xFF0B1B3D),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(
                 AppUser.program,
@@ -88,7 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Stack(
             children: [
               IconButton(
-                icon: const Icon(Icons.notifications_outlined, color: Color(0xFF0B1B3D)),
+                icon: const Icon(Icons.notifications_outlined,
+                    color: Color(0xFF0B1B3D)),
                 onPressed: () {},
               ),
               Positioned(
@@ -121,12 +149,16 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Row(
         children: [
-          const Icon(Icons.warning_amber_rounded, color: Color(0xFFF5A623), size: 18),
+          const Icon(Icons.warning_amber_rounded,
+              color: Color(0xFFF5A623), size: 18),
           const SizedBox(width: 8),
           const Expanded(
             child: Text(
               'Scholarship deadline in 2 days',
-              style: TextStyle(color: Color(0xFF8A6D3B), fontSize: 13, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                  color: Color(0xFF8A6D3B),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500),
             ),
           ),
           GestureDetector(
@@ -183,17 +215,24 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () => setState(() => _selectedCategory = cat),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
                 color: isSelected ? const Color(0xFF0B1B3D) : Colors.white,
                 borderRadius: BorderRadius.circular(20),
-                border: isSelected ? null : Border.all(color: const Color(0xFFE2E8F0)),
+                border: isSelected
+                    ? null
+                    : Border.all(color: const Color(0xFFE2E8F0)),
               ),
               child: Text(
                 cat,
                 style: TextStyle(
-                  color: isSelected ? Colors.white : const Color(0xFF4A5568),
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  color: isSelected
+                      ? Colors.white
+                      : const Color(0xFF4A5568),
+                  fontWeight: isSelected
+                      ? FontWeight.bold
+                      : FontWeight.normal,
                   fontSize: 13,
                 ),
               ),
@@ -208,7 +247,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final items = _filtered;
     if (items.isEmpty) {
       return const Center(
-        child: Text('No opportunities found', style: TextStyle(color: Colors.black38)),
+        child: Text('No opportunities found',
+            style: TextStyle(color: Colors.black38)),
       );
     }
     return ListView.builder(
@@ -219,11 +259,17 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => EventDetailScreen(opportunity: items[i]),
+            // ← fix: correct screen name
+            builder: (_) => OpportunityScreen(opportunity: items[i]),
           ),
         ),
         onBookmark: () => setState(() {
           items[i].isBookmarked = !items[i].isBookmarked;
+        }),
+        // ← fix: RSVP from card also updates state
+        onRSVP: () => setState(() {
+          items[i].hasRSVPd = !items[i].hasRSVPd;
+          items[i].registeredCount += items[i].hasRSVPd ? 1 : -1;
         }),
       ),
     );
@@ -234,11 +280,13 @@ class _OpportunityCard extends StatelessWidget {
   final Opportunity opportunity;
   final VoidCallback onTap;
   final VoidCallback onBookmark;
+  final VoidCallback onRSVP; // ← new
 
   const _OpportunityCard({
     required this.opportunity,
     required this.onTap,
     required this.onBookmark,
+    required this.onRSVP,
   });
 
   Color get _categoryColor {
@@ -252,6 +300,7 @@ class _OpportunityCard extends StatelessWidget {
   }
 
   Color get _actionColor {
+    if (opportunity.hasRSVPd) return Colors.black.withOpacity(0.05);
     switch (opportunity.actionLabel) {
       case 'RSVP':  return const Color(0xFFF5A623);
       case 'Apply': return const Color(0xFF1B2B4B);
@@ -261,6 +310,7 @@ class _OpportunityCard extends StatelessWidget {
   }
 
   Color get _actionForegroundColor {
+    if (opportunity.hasRSVPd) return const Color(0xFF0B1B3D);
     switch (opportunity.actionLabel) {
       case 'Apply': return Colors.white;
       default:      return Colors.black;
@@ -303,8 +353,12 @@ class _OpportunityCard extends StatelessWidget {
                 GestureDetector(
                   onTap: onBookmark,
                   child: Icon(
-                    opportunity.isBookmarked ? Icons.bookmark : Icons.bookmark_outline,
-                    color: opportunity.isBookmarked ? const Color(0xFFF5A623) : Colors.black26,
+                    opportunity.isBookmarked
+                        ? Icons.bookmark
+                        : Icons.bookmark_outline,
+                    color: opportunity.isBookmarked
+                        ? const Color(0xFFF5A623)
+                        : Colors.black26,
                     size: 20,
                   ),
                 ),
@@ -322,20 +376,25 @@ class _OpportunityCard extends StatelessWidget {
             const SizedBox(height: 6),
             Row(
               children: [
-                const Icon(Icons.calendar_today_outlined, color: Colors.black38, size: 13),
+                const Icon(Icons.calendar_today_outlined,
+                    color: Colors.black38, size: 13),
                 const SizedBox(width: 4),
-                Text(opportunity.date, style: const TextStyle(color: Colors.black54, fontSize: 12)),
+                Text(opportunity.date,
+                    style: const TextStyle(
+                        color: Colors.black54, fontSize: 12)),
               ],
             ),
             const SizedBox(height: 2),
             Row(
               children: [
-                const Icon(Icons.location_on_outlined, color: Colors.black38, size: 13),
+                const Icon(Icons.location_on_outlined,
+                    color: Colors.black38, size: 13),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(
                     opportunity.location,
-                    style: const TextStyle(color: Colors.black54, fontSize: 12),
+                    style: const TextStyle(
+                        color: Colors.black54, fontSize: 12),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -355,37 +414,58 @@ class _OpportunityCard extends StatelessWidget {
                   width: 50,
                   height: 22,
                   child: Stack(
-                    children: List.generate(3, (i) => Positioned(
-                      left: i * 14.0,
-                      child: CircleAvatar(
-                        radius: 11,
-                        backgroundColor: Colors.white,
+                    children: List.generate(
+                      3,
+                      (i) => Positioned(
+                        left: i * 14.0,
                         child: CircleAvatar(
-                          radius: 10,
-                          backgroundColor: const Color(0xFF0B1B3D).withOpacity(0.4 - i * 0.1),
-                          child: Text(
-                            ['A', 'B', 'C'][i],
-                            style: const TextStyle(color: Colors.white, fontSize: 8),
+                          radius: 11,
+                          backgroundColor: Colors.white,
+                          child: CircleAvatar(
+                            radius: 10,
+                            backgroundColor: const Color(0xFF0B1B3D)
+                                .withOpacity(0.4 - i * 0.1),
+                            child: Text(
+                              ['A', 'B', 'C'][i],
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 8),
+                            ),
                           ),
                         ),
                       ),
-                    )),
+                    ),
                   ),
                 ),
                 const Spacer(),
+                // ← fix: wired up onRSVP, reflects hasRSVPd state
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onRSVP,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _actionColor,
                     foregroundColor: _actionForegroundColor,
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 8),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    elevation: 0,
                   ),
-                  child: Text(
-                    opportunity.actionLabel,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (opportunity.hasRSVPd) ...[
+                        const Icon(Icons.check_circle, size: 13),
+                        const SizedBox(width: 4),
+                      ],
+                      Text(
+                        opportunity.hasRSVPd
+                            ? 'Registered'
+                            : opportunity.actionLabel,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 13),
+                      ),
+                    ],
                   ),
                 ),
               ],

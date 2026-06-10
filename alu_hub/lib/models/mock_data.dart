@@ -14,7 +14,7 @@ class Opportunity {
   final String description;
   final String organizer;
   final String actionLabel; 
-  final int registeredCount;
+  int registeredCount;
   final int totalSlots;
   final List<String> tags;
   bool isBookmarked;

@@ -450,9 +450,15 @@ class _ExploreResourcesScreenState extends State<ExploreResourcesScreen> {
         unselectedItemColor: AppColors.white.withOpacity(0.55),
         onTap: (index) {
           setState(() => _currentIndex = index);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Navigation item ${index + 1} tapped.')),
-          );
+          switch (index) {
+            case 0:
+              Navigator.pushReplacementNamed(context, '/home');
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, '/communities');
+              break;
+            // add cases for 3 (Passport) and 4 (Profile) when ready
+          }
         },
         items: const [
           BottomNavigationBarItem(
