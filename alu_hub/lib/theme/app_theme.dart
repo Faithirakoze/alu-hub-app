@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-
 class AppColors {
   static const Color navy = Color(0xFF0D1B33);
   static const Color gold = Color(0xFFFEAE2C);
@@ -111,7 +109,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        shadowColor: Colors.black.withOpacity(0.08),
+        shadowColor: Colors.black.withAlpha(20),
         margin: EdgeInsets.zero,
       ),
 
