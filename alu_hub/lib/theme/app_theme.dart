@@ -14,7 +14,27 @@ class AppColors {
   static const Color borderGrey = Color(0xFFC5C6CE);
   static const Color divider = Color(0xFFEAE7EA);
   static const Color error = Color(0xFFBA1A1A);
+  static const Color surfaceContainerHighest = Color(0xFFE4E2E4);
 
+  // Brand colors
+  static const Color brandNavy = Color(0xFF0D1B33);
+  static const Color brandGold = Color(0xFFFEAE2C);
+
+  // Material Design 3 colors
+  static const Color primary = Color(0xFF0D1B33);
+  static const Color primaryContainer = Color(0xFF4D63A8);
+  static const Color secondary = Color(0xFFFEAE2C);
+  static const Color secondaryContainer = Color(0xFFFBDC7E);
+  static const Color onSecondaryContainer = Color(0xFF332E00);
+  static const Color surface = Color(0xFFFBF8FB);
+  static const Color surfaceContainerLowest = Color(0xFFFFFFFF);
+  static const Color surfaceContainerLow = Color(0xFFF5F2F5);
+  static const Color surfaceContainerHigh = Color(0xFFECE9EC);
+  static const Color outline = Color(0xFF7A7680);
+  static const Color outlineVariant = Color(0xFFC5C6CE);
+  static const Color onSurface = Color(0xFF1B1B1D);
+  static const Color onSurfaceVariant = Color(0xFF44474D);
+  static const Color onBackground = Color(0xFF1B1B1D);
   
   static const Color career = Color(0xFF2563EB);
   static const Color finance = Color(0xFF16A34A);
