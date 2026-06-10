@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/mock_data.dart'; 
+import '../models/mock_data.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

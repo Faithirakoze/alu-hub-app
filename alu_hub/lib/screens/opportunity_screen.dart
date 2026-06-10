@@ -134,8 +134,6 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                         spacing: 8,
                         children: [
                           _TagChip(label: op.category, color: _categoryColor),
-                          if (op.tier.isNotEmpty)
-                            _TagChip(label: op.tier, color: const Color(0xFFF5A623)),
                         ],
                       ),
                       const SizedBox(height: 14),

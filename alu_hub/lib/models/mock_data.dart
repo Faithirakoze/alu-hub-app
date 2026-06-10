@@ -32,7 +32,6 @@ class Opportunity {
     required this.registeredCount,
     required this.totalSlots,
     required this.tags,
-    this.tier = '',
     this.isBookmarked = false,
     this.hasRSVPd = false,
   });
@@ -179,13 +178,8 @@ const List<CommunityPost> mockCommunityPosts = [
     authorName: 'Kofi Mensah',
     authorRole: 'STUDENT',
     timeAgo: '3 hours ago',
-<<<<<<< HEAD
-    content: 'Just finished the Flutter workshop. honestly one of the best sessions this semester. '
-         'Highly recommend everyone to attend the next one!',
-=======
     content: 'Just finished the Flutter workshop. Honestly, one of the best sessions this semester. '
-        'Big thanks to the facilitators',
->>>>>>> db7e1fb570aa3c75bf72bb9b6b56dce5ac8c8cd2
+      'Big thanks to the facilitators',
     likes: 19,
     comments: 7,
     isPinned: false,
