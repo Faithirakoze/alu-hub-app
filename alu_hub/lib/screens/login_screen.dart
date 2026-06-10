@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
-import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -34,9 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onCreateAccount() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const SignupAccountScreen()),
-    );
+    Navigator.of(context).pushNamed('/signup');
   }
 
   @override
@@ -61,23 +57,33 @@ class _LoginScreenState extends State<LoginScreen> {
                   Column(
                     children: [
                       Container(
-                        width: 64,
-                        height: 64,
+                        width: 100,
+                        height: 100,
                         decoration: BoxDecoration(
-                          color: AppColors.primaryContainer,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.10),
-                              blurRadius: 6,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: const Color(0xFFF5A623),
+                            width: 2.5,
+                          ),
                         ),
-                        child: const Icon(
-                          Icons.school_outlined,
-                          color: Colors.white,
-                          size: 32,
+                        child: Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: List.generate(3, (index) {
+                              return Container(
+                                width: 6,
+                                height: 32,
+                                margin: EdgeInsets.only(
+                                  left: index == 0 ? 0 : 5,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF5A623),
+                                  borderRadius: BorderRadius.circular(3),
+                                ),
+                              );
+                            }),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 8),

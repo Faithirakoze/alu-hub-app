@@ -197,7 +197,7 @@ class _SignupAppBar extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).padding.top + 64,
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-      color: AppColors.primaryContainer,
+      color: AppColors.navy,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
@@ -313,7 +313,7 @@ class _NextButton extends StatelessWidget {
         child: ElevatedButton.icon(
           onPressed: onNext,
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.secondaryContainer,
+            backgroundColor: const Color(0xFFF5A623),
             foregroundColor: AppColors.primary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
