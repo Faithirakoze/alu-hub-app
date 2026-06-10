@@ -27,7 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _onLogin() {
     if (_formKey.currentState?.validate() ?? false) {
-      // TODO: handle login
+      // TODO: perform authentication, then navigate to identity step
+      Navigator.of(context).pushReplacementNamed('/sign-up-identity');
     }
   }
 
@@ -132,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: AppColors.onSurface,
                             ),
                             decoration: const InputDecoration(
-                              hintText: 'student@alueducation.com',
+                              hintText: 'Enter your email',
                             ),
                             validator: (v) {
                               if (v == null || v.isEmpty) return 'Email is required';

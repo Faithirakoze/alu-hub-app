@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/mock_data.dart'; 
+import '../models/mock_data.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return matchesCategory && matchesSearch;
     }).toList();
   }
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1C30),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -46,13 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-   
   Widget _buildTopBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          
           CircleAvatar(
             radius: 20,
             backgroundColor: const Color(0xFFF5A623),
@@ -86,7 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           const Spacer(),
-          // Notification bell
           Stack(
             children: [
               IconButton(
@@ -112,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-   Widget _buildAlertBanner() {
+  Widget _buildAlertBanner() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -147,7 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Search bar
   Widget _buildSearchBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -205,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-//Feed
+
   Widget _buildFeed() {
     final items = _filtered;
     if (items.isEmpty) {
@@ -231,8 +228,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-//Opportunity
 
 class _OpportunityCard extends StatelessWidget {
   final Opportunity opportunity;
@@ -278,7 +273,6 @@ class _OpportunityCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Category label + bookmark
             Row(
               children: [
                 Text(
@@ -302,7 +296,6 @@ class _OpportunityCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 6),
-            // Title
             Text(
               opportunity.title,
               style: const TextStyle(
@@ -312,7 +305,6 @@ class _OpportunityCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 6),
-            // Date
             Row(
               children: [
                 const Icon(Icons.calendar_today_outlined, color: Colors.white38, size: 13),
@@ -321,7 +313,6 @@ class _OpportunityCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 2),
-            // Location
             Row(
               children: [
                 const Icon(Icons.location_on_outlined, color: Colors.white38, size: 13),
@@ -336,7 +327,6 @@ class _OpportunityCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            // Description preview
             Text(
               opportunity.description,
               style: const TextStyle(color: Colors.white54, fontSize: 12),
@@ -344,7 +334,6 @@ class _OpportunityCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 12),
-            
             Row(
               children: [
                 SizedBox(
@@ -369,7 +358,6 @@ class _OpportunityCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                // Action button
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -391,5 +379,117 @@ class _OpportunityCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class EventDetailScreen extends StatelessWidget {
+  final Opportunity opportunity;
+
+  const EventDetailScreen({required this.opportunity, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF0F1C30),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF0F1C30),
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text(opportunity.title, style: const TextStyle(color: Colors.white)),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1B2B4B),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    opportunity.category,
+                    style: TextStyle(
+                      color: _detailCategoryColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    opportunity.title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Row(
+                    children: [
+                      const Icon(Icons.calendar_today_outlined, color: Colors.white38, size: 14),
+                      const SizedBox(width: 6),
+                      Text(opportunity.date, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+                      const SizedBox(width: 16),
+                      const Icon(Icons.location_on_outlined, color: Colors.white38, size: 14),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          opportunity.location,
+                          style: const TextStyle(color: Colors.white54, fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    opportunity.description,
+                    style: const TextStyle(color: Colors.white70, fontSize: 13, height: 1.4),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: _detailActionColor,
+                foregroundColor: Colors.black,
+                minimumSize: const Size.fromHeight(48),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              child: Text(
+                opportunity.actionLabel,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Color get _detailCategoryColor {
+    switch (opportunity.category.toUpperCase()) {
+      case 'CAREER': return const Color(0xFF4A90D9);
+      case 'FINANCE': return const Color(0xFFF5A623);
+      case 'SOCIAL': return const Color(0xFF7ED321);
+      case 'WELLNESS': return const Color(0xFF9B59B6);
+      default: return const Color(0xFF4A90D9);
+    }
+  }
+
+  Color get _detailActionColor {
+    switch (opportunity.actionLabel) {
+      case 'RSVP': return const Color(0xFFF5A623);
+      case 'Apply': return const Color(0xFF4A90D9);
+      case 'Join': return const Color(0xFF7ED321);
+      default: return const Color(0xFFF5A623);
+    }
   }
 }

@@ -51,7 +51,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
     final op = widget.opportunity;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1C30),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           CustomScrollView(
@@ -59,7 +59,6 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
               SliverAppBar(
                 expandedHeight: 220,
                 pinned: true,
-                backgroundColor: const Color(0xFF1B2B4B),
                 leading: IconButton(
                   icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
                   onPressed: () => Navigator.pop(context),
@@ -136,8 +135,6 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                         spacing: 8,
                         children: [
                           _TagChip(label: op.category, color: _categoryColor),
-                          if (op.tier.isNotEmpty)
-                            _TagChip(label: op.tier, color: const Color(0xFFF5A623)),
                         ],
                       ),
                       const SizedBox(height: 10),

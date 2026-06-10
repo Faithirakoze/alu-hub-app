@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'explore_resources_screen.dart';
-import 'theme/app_theme.dart';
+import '../theme/app_theme.dart';
 
 class SignUpInterestsScreen extends StatefulWidget {
   const SignUpInterestsScreen({super.key});
@@ -22,7 +21,7 @@ class _SignUpInterestsScreenState extends State<SignUpInterestsScreen> {
     _InterestOption('Practical Life', Icons.handyman_outlined),
   ];
 
-  final Set<String> _selectedInterests = {'Career', 'Community'};
+  final Set<String> _selectedInterests = {};
 
   void _finishSetup() {
     if (_selectedInterests.isEmpty) {

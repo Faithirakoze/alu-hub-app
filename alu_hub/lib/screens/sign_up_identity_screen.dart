@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'sign_up_interests_screen.dart';
-import 'theme/app_theme.dart';
+import '../theme/app_theme.dart';
 
 class SignUpIdentityScreen extends StatefulWidget {
   const SignUpIdentityScreen({super.key});
@@ -18,6 +17,8 @@ class _SignUpIdentityScreenState extends State<SignUpIdentityScreen> {
   String selectedProgram = 'BSE';
   String selectedYear = 'Year 2';
   String selectedRole = 'Student';
+
+  bool get _isStudent => selectedRole == 'Student';
 
   void _goNext() {
     Navigator.of(context).push(
@@ -104,22 +105,8 @@ class _SignUpIdentityScreenState extends State<SignUpIdentityScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              _SectionLabel(title: 'Select your program'),
-              const SizedBox(height: 10),
-              _OptionGrid(
-                options: _programs,
-                selectedValue: selectedProgram,
-                onSelected: (value) => setState(() => selectedProgram = value),
-              ),
-              const SizedBox(height: 20),
-              _SectionLabel(title: 'Current year'),
-              const SizedBox(height: 10),
-              _OptionGrid(
-                options: _years,
-                selectedValue: selectedYear,
-                onSelected: (value) => setState(() => selectedYear = value),
-              ),
-              const SizedBox(height: 20),
+
+              // ── 1. ROLE (always visible) ──────────────────────────────
               _SectionLabel(title: 'Role'),
               const SizedBox(height: 10),
               _OptionGrid(
@@ -127,7 +114,41 @@ class _SignUpIdentityScreenState extends State<SignUpIdentityScreen> {
                 selectedValue: selectedRole,
                 onSelected: (value) => setState(() => selectedRole = value),
               ),
+
+              // ── 2 & 3. STUDENT-ONLY FIELDS (animated in/out) ─────────
+              AnimatedSize(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                child: _isStudent
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 20),
+                          _SectionLabel(title: 'Select your program'),
+                          const SizedBox(height: 10),
+                          _OptionGrid(
+                            options: _programs,
+                            selectedValue: selectedProgram,
+                            onSelected: (value) =>
+                                setState(() => selectedProgram = value),
+                          ),
+                          const SizedBox(height: 20),
+                          _SectionLabel(title: 'Current year'),
+                          const SizedBox(height: 10),
+                          _OptionGrid(
+                            options: _years,
+                            selectedValue: selectedYear,
+                            onSelected: (value) =>
+                                setState(() => selectedYear = value),
+                          ),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
+              ),
+
               const SizedBox(height: 20),
+
+              // ── SUMMARY PILLS ─────────────────────────────────────────
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
@@ -140,9 +161,9 @@ class _SignUpIdentityScreenState extends State<SignUpIdentityScreen> {
                   spacing: 8,
                   runSpacing: 8,
                   children: [
-                    _SummaryPill(label: selectedProgram),
-                    _SummaryPill(label: selectedYear),
                     _SummaryPill(label: selectedRole),
+                    if (_isStudent) _SummaryPill(label: selectedProgram),
+                    if (_isStudent) _SummaryPill(label: selectedYear),
                   ],
                 ),
               ),
@@ -171,9 +192,10 @@ class _SignUpIdentityScreenState extends State<SignUpIdentityScreen> {
   }
 }
 
+// ── Sub-widgets (unchanged) ───────────────────────────────────────────────────
+
 class _SectionLabel extends StatelessWidget {
   const _SectionLabel({required this.title});
-
   final String title;
 
   @override
@@ -247,7 +269,6 @@ class _OptionGrid extends StatelessWidget {
 
 class _SummaryPill extends StatelessWidget {
   const _SummaryPill({required this.label});
-
   final String label;
 
   @override

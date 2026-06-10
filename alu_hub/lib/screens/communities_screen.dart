@@ -44,10 +44,9 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
   }
   Widget _buildCommunityList() {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1C30),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: const Text('Communities', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFF1B2B4B),
         actions: [
           IconButton(icon: const Icon(Icons.search), onPressed: () {}),
         ],
@@ -99,9 +98,8 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
     final community = _communities[_activeCommunityIndex];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1C30),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1B2B4B),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () => setState(() => _isInCommunity = false),
@@ -149,7 +147,7 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
   void _showPostDialog(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: const Color(0xFF1B2B4B),
+      backgroundColor: Theme.of(context).cardColor,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
