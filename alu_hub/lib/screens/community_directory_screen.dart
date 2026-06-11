@@ -6,6 +6,7 @@ import '../theme/app_theme.dart';
 import '../widgets/community_app_bar.dart';
 import '../widgets/section_header.dart';
 import '../widgets/community_list_item.dart';
+import 'group_chat_screen.dart';
 
 // StatefulWidget: this screen holds a TabController which changes state
 // (which tab is active), so it must be Stateful, not Stateless.
@@ -59,6 +60,18 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
       // Without setState, the gold highlight won't move to the tapped item.
       _selectedIndex = index;
     });
+  }
+
+  // Opens the group chat screen for a community — navigation logic lives here once.
+  void _openGroupChat(String groupName) {
+    Navigator.push(
+      context,
+      // MaterialPageRoute tells Flutter how to animate to the new screen.
+      // builder: returns the screen widget to show.
+      MaterialPageRoute(
+        builder: (_) => GroupChatScreen(groupName: groupName),
+      ),
+    );
   }
 
   @override
@@ -218,7 +231,7 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
           subtitle: "Sarah: Don't forget the assignment...",
           timestamp: '14:20',
           unreadCount: 3,                    // shows badge with "3"
-          onTap: () {}, // ripple shows, no message — clean UX
+          onTap: () => _openGroupChat('BSE Year 2 Core'),
         ),
 
         CommunityListItem(
@@ -229,7 +242,7 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
           subtitle: 'Join the pitch session today!',
           timestamp: 'Yesterday',
           // no unreadCount = no badge shown (defaults to null)
-          onTap: () {}, // ripple shows, no message — clean UX
+          onTap: () => _openGroupChat('Entrepreneurship Lab'),
         ),
 
         // 8px spacer between sections to breathe
@@ -246,7 +259,7 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
           subtitle: 'New role at Microsoft Africa...',
           timestamp: 'Tue',
           unreadCount: 12,
-          onTap: () {}, // ripple shows, no message — clean UX
+          onTap: () => _openGroupChat('Tech Internship Hub'),
         ),
 
         const SizedBox(height: 8),
@@ -262,7 +275,7 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
           subtitle: 'Training starts at 5 PM sharp.',
           timestamp: 'Mon',
           // no badge
-          onTap: () {}, // ripple shows, no message — clean UX
+          onTap: () => _openGroupChat('ALU Football Club'),
         ),
 
       ],
