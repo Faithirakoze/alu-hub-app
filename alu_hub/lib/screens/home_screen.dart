@@ -61,9 +61,13 @@ class _HomeScreenState extends State<HomeScreen> {
             case 2:
               Navigator.pushReplacementNamed(context, '/communities');
               break;
+            case 3:
+              Navigator.pushReplacementNamed(context, '/passport');
+              break;
             case 4:
               Navigator.pushReplacementNamed(context, '/profile');
               break;
+            
           }
         },
         items: const [

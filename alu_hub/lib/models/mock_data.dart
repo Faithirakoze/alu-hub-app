@@ -17,7 +17,6 @@ class Opportunity {
   int registeredCount;
   final int totalSlots;
   final List<String> tags;
-  final String tier;
   bool isBookmarked;
   bool hasRSVPd;
 

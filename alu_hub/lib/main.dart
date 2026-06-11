@@ -1,5 +1,3 @@
-// main.dart
-// Application entry point for ALU Hub.
 import 'package:flutter/material.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/login_screen.dart';
@@ -14,6 +12,7 @@ import 'screens/student_profile_screen.dart';
 import 'screens/organizer_post_screen.dart';
 import 'screens/organizer_community_screen.dart';
 import 'screens/organizer_profile_screen.dart';
+import 'screens/passport_screen.dart';
 import 'theme/app_theme.dart';
 
 
@@ -47,6 +46,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const StudentProfileScreen(),
         '/organizer-communities': (context) => const OrganizerCommunityScreen(),
         '/organizer-profile': (context) => const OrganizerProfileScreen(),
+        '/passport': (context) => const PassportScreen(),
       },
     );
   }

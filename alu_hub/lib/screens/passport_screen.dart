@@ -1,5 +1,3 @@
-// passport_screen.dart
-// The Passport screen — shows a student's achievements, badges, and journey.
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../widgets/community_app_bar.dart';
@@ -14,8 +12,6 @@ class PassportScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       appBar: const CommunityAppBar(),
 
-      // SingleChildScrollView: makes the whole page scroll as one column.
-      // We use this instead of ListView because the content is not a repeating list.
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,9 +155,22 @@ class PassportScreen extends StatelessWidget {
         ),
         unselectedLabelStyle: const TextStyle(fontSize: 11),
         onTap: (index) {
-          // index 2 = Communities — go back to the previous screen
-          if (index == 2) Navigator.pop(context);
-          // other tabs are placeholders for now
+          switch (index) {
+            case 0:
+              Navigator.pushReplacementNamed(context, '/home');
+              break;
+            case 1:
+              Navigator.pushReplacementNamed(context, '/explore-resources');
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, '/communities');
+              break;
+            case 3:
+              break; // already here
+            case 4:
+              Navigator.pushReplacementNamed(context, '/profile');
+              break;
+          }
         },
         items: const [
           BottomNavigationBarItem(
@@ -395,9 +404,6 @@ class PassportScreen extends StatelessWidget {
   }
 }
 
-// ── STAT BOX ──────────────────────────────────────────────────────────────────
-// Private widget — only used inside this file.
-// One of the 4 stat numbers in the header card (Events, Comm., Roles, Skills).
 class _StatBox extends StatelessWidget {
   final String value; // the big number e.g. '24'
   final String label; // small label below e.g. 'EVENTS'

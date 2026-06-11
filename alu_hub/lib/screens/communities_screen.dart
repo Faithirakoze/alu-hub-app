@@ -108,9 +108,12 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
             break;
           case 2:
             break; 
+          case 3:
+            Navigator.pushReplacementNamed(context, '/passport');
+            break;
           case 4:
             Navigator.pushReplacementNamed(context, '/profile');
-          // cases 3 & 4 when Passport and Profile are ready
+            break;
         }
       },
       items: const [
