@@ -14,6 +14,7 @@ class CommunityListItem extends StatelessWidget {
   final String subtitle;    // smaller grey preview text
   final String timestamp;   // right-aligned time e.g. '14:20', 'Yesterday', 'Mon'
   final int? unreadCount;   // int? means this can be null — null = no badge shown
+  final VoidCallback onTap; // VoidCallback = a function that takes no arguments and returns nothing
 
   const CommunityListItem({
     super.key,
@@ -24,6 +25,7 @@ class CommunityListItem extends StatelessWidget {
     required this.subtitle,
     required this.timestamp,
     this.unreadCount, // optional — if you don't pass it, it defaults to null
+    required this.onTap, // add this alongside the other required fields
   });
 
   @override
@@ -46,8 +48,9 @@ class CommunityListItem extends StatelessWidget {
       // InkWell: wraps any widget to give it a Material ripple effect on tap.
       // Without InkWell, tapping the row feels dead.
       child: InkWell(
-        onTap: () {}, // empty for now — we'll add navigation later
-
+        onTap: onTap, // passes the tap through — ripple shows automatically
+        splashColor: AppColors.gold.withOpacity(0.1),  // gold-tinted ripple
+        highlightColor: AppColors.gold.withOpacity(0.05), // subtle gold highlight when held
         child: Padding(
           // 16px padding on all 4 sides — matches the design's standard margin
           padding: const EdgeInsets.all(16),

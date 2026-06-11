@@ -142,6 +142,8 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
         // fixed: all items always visible, equally spaced.
         // (The other option, 'shifting', hides labels on inactive items.)
         type: BottomNavigationBarType.fixed,
+        showSelectedLabels: true,   // forces label to show under the active icon
+        showUnselectedLabels: true,  // forces label to show under all inactive icons
 
         // navy background to match the AppBar
         backgroundColor: AppColors.navy,
@@ -216,6 +218,7 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
           subtitle: "Sarah: Don't forget the assignment...",
           timestamp: '14:20',
           unreadCount: 3,                    // shows badge with "3"
+          onTap: () {}, // ripple shows, no message — clean UX
         ),
 
         CommunityListItem(
@@ -226,6 +229,7 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
           subtitle: 'Join the pitch session today!',
           timestamp: 'Yesterday',
           // no unreadCount = no badge shown (defaults to null)
+          onTap: () {}, // ripple shows, no message — clean UX
         ),
 
         // 8px spacer between sections to breathe
@@ -242,6 +246,7 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
           subtitle: 'New role at Microsoft Africa...',
           timestamp: 'Tue',
           unreadCount: 12,
+          onTap: () {}, // ripple shows, no message — clean UX
         ),
 
         const SizedBox(height: 8),
@@ -257,6 +262,7 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
           subtitle: 'Training starts at 5 PM sharp.',
           timestamp: 'Mon',
           // no badge
+          onTap: () {}, // ripple shows, no message — clean UX
         ),
 
       ],
