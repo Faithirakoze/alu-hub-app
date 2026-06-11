@@ -20,7 +20,7 @@ Dart
 
 Material Design
 
-# ### Prerequisites
+# Prerequisites
 - Install flutter SDK (https://flutter.dev/docs/get-started/install)
 - Android Studio (for Android development)
 - Git
@@ -32,12 +32,12 @@ Material Design
    cd alu-hub-app/alu_hub
     flutter pub get
    
-# iOS
+ **iOS**
 flutter run -d iphone
 
-# Android
+**Android**
 flutter run -d android
 
-# Linux/Windows
+ **Linux/Windows**
 flutter run
 
