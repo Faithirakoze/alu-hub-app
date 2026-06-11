@@ -193,3 +193,64 @@ const List<CommunityPost> mockCommunityPosts = [
 const List<String> feedCategories = ['All', 'Events', 'Career', 'Finance', 'Wellness', 'Social'];
 const List<String> communityTabs = ['Announcements', 'Discussion', 'Opportunities'];
  
+
+// ─────────────────────────────────────────────
+// CHAT MESSAGE MODEL
+// ─────────────────────────────────────────────
+
+// ChatMessage holds the data for one chat bubble.
+class ChatMessage {
+  final String senderName;  // name shown above the bubble
+  final String text;        // the message text
+  final String time;        // timestamp shown below the bubble
+  final bool isMe;          // true = right-aligned navy bubble; false = left grey bubble
+  final bool isRead;        // true = shows "Read" under sent messages
+  final String? imageUrl;   // optional image above the text (nullable)
+
+  const ChatMessage({
+    required this.senderName,
+    required this.text,
+    required this.time,
+    required this.isMe,
+    this.isRead = false,
+    this.imageUrl,
+  });
+}
+
+// mockChatMessages: the list of messages shown in the chat screen.
+const List<ChatMessage> mockChatMessages = [
+  ChatMessage(
+    senderName: 'Sarah M.',
+    text: 'Found this great reference for our case study!',
+    time: '09:12',
+    isMe: false,
+    // A real Unsplash photo of a study group — matches the design
+    imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400',
+  ),
+  ChatMessage(
+    senderName: 'Me',
+    text: 'Thanks Adebayo, reviewing them now. They look very professional.',
+    time: '10:50',
+    isMe: true,
+    isRead: true,
+  ),
+  ChatMessage(
+    senderName: 'Adebayo O.',
+    text: 'The presentation slides are uploaded to the shared drive. Please take a look before the meeting.',
+    time: '10:45',
+    isMe: false,
+  ),
+  ChatMessage(
+    senderName: 'Sarah M.',
+    text: 'Are we still having the peer review session for the Entrepreneurship module today?',
+    time: '14:18',
+    isMe: false,
+  ),
+  ChatMessage(
+    senderName: 'Me',
+    text: "Absolutely! Let's meet at the Innovation Lab at 4 PM.",
+    time: '14:22',
+    isMe: true,
+    isRead: false,
+  ),
+];
