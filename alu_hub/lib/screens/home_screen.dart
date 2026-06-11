@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/mock_data.dart';
-import 'opportunity_screen.dart'; // ← fix: correct import
+import 'opportunity_screen.dart'; 
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
