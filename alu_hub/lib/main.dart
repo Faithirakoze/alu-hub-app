@@ -1,3 +1,5 @@
+// main.dart
+// Application entry point for ALU Hub.
 import 'package:flutter/material.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/login_screen.dart';
@@ -17,6 +19,7 @@ import 'theme/app_theme.dart';
 
 
 void main() {
+  // Initialize and run the application.
   runApp(const MyApp());
 }
 
