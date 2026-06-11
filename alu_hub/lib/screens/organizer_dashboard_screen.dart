@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
-import '../widgets/bottom_nav_bar.dart';
 
 enum PostTab { active, past, review }
 
@@ -18,7 +17,7 @@ class OrganizerPost {
   final String rsvps;
   final String attended;
   final String progressLabel;
-  final double progress; // 0.0 - 1.0
+  final double progress;
   final String primaryAction;
   final String secondaryAction;
 
@@ -38,7 +37,7 @@ class OrganizerPost {
   });
 }
 
-const List<OrganizerPost> _mockPosts = [
+const List<OrganizerPost> mockOrganizerPosts = [
   OrganizerPost(
     title: 'AI Governance Summit 2024',
     dateLabel: 'Oct 24, 2024 • 10:00 AM',
@@ -93,15 +92,15 @@ class OrganizerDashboardScreen extends StatefulWidget {
 
 class _OrganizerDashboardScreenState extends State<OrganizerDashboardScreen> {
   PostTab _selectedTab = PostTab.active;
+  int _currentNavIndex = 0;
 
-  // Badge colours taken from the team's design tokens (M3 fixed colours).
   static const Color _academicBg = Color(0xFFD7E2FF);
   static const Color _socialBg = Color(0xFFFFDCBF);
   static const Color _socialText = Color(0xFF5E4023);
   static const Color _deltaColor = Color(0xFF835500);
 
   List<OrganizerPost> get _visiblePosts =>
-      _mockPosts.where((p) => p.tab == _selectedTab).toList();
+    mockOrganizerPosts.where((p) => p.tab == _selectedTab).toList();
 
   void _toast(String message) {
     ScaffoldMessenger.of(context)
@@ -123,9 +122,38 @@ class _OrganizerDashboardScreenState extends State<OrganizerDashboardScreen> {
         onPressed: () => _toast('New post (demo)'),
         child: const Icon(Icons.add, size: 30),
       ),
-      bottomNavigationBar: AppBottomNav(
-        currentIndex: 4,
-        onTap: (_) => _toast('Navigation (demo)'),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: AppColors.navy,
+        currentIndex: _currentNavIndex,
+        selectedItemColor: AppColors.gold,
+        unselectedItemColor: Colors.white.withOpacity(0.55),
+        onTap: (index) {
+          setState(() => _currentNavIndex = index);
+          switch (index) {
+            case 0:
+              break;
+            case 1:
+              Navigator.pushReplacementNamed(context, '/organizer-post');
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, '/organizer-communities');
+              break;
+            case 3:
+              Navigator.pushReplacementNamed(context, '/organizer-profile');
+              break;
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add_box_outlined), label: 'Post'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.groups_rounded), label: 'Community'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline), label: 'Profile'),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
@@ -139,7 +167,7 @@ class _OrganizerDashboardScreenState extends State<OrganizerDashboardScreen> {
           else
             ...posts.map((p) => Padding(
                   padding: const EdgeInsets.only(bottom: 16),
-                  child: _PostCard(
+                  child: OrganizerPostCard(
                     post: p,
                     academicBg: _academicBg,
                     socialBg: _socialBg,
@@ -233,7 +261,8 @@ class _OrganizerDashboardScreenState extends State<OrganizerDashboardScreen> {
         _StatCard(
             label: 'Rating',
             value: '4.9',
-            trailing: const Icon(Icons.star, size: 18, color: AppColors.gold)),
+            trailing:
+                const Icon(Icons.star, size: 18, color: AppColors.gold)),
       ],
     );
   }
@@ -335,14 +364,14 @@ class _StatCard extends StatelessWidget {
   }
 }
 
-class _PostCard extends StatelessWidget {
+class OrganizerPostCard extends StatelessWidget {
   final OrganizerPost post;
   final Color academicBg;
   final Color socialBg;
   final Color socialText;
   final void Function(String) onAction;
 
-  const _PostCard({
+  const OrganizerPostCard({
     required this.post,
     required this.academicBg,
     required this.socialBg,
@@ -575,7 +604,6 @@ class _PostCard extends StatelessWidget {
   }
 }
 
-/// Friendly empty state for tabs with no posts.
 class _EmptyPosts extends StatelessWidget {
   const _EmptyPosts();
 

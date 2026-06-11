@@ -61,6 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
             case 2:
               Navigator.pushReplacementNamed(context, '/communities');
               break;
+            case 4:
+              Navigator.pushReplacementNamed(context, '/profile');
+              break;
           }
         },
         items: const [
@@ -259,14 +262,13 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            // ← fix: correct screen name
             builder: (_) => OpportunityScreen(opportunity: items[i]),
           ),
         ),
         onBookmark: () => setState(() {
           items[i].isBookmarked = !items[i].isBookmarked;
         }),
-        // ← fix: RSVP from card also updates state
+        // 
         onRSVP: () => setState(() {
           items[i].hasRSVPd = !items[i].hasRSVPd;
           items[i].registeredCount += items[i].hasRSVPd ? 1 : -1;

@@ -13,6 +13,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  String _selectedRole = 'Student'; // default
 
   @override
   void dispose() {
@@ -27,8 +28,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _onLogin() {
     if (_formKey.currentState?.validate() ?? false) {
-      // TODO: perform authentication, then navigate to identity step
-      Navigator.of(context).pushReplacementNamed('/sign-up-identity');
+      if (_selectedRole == 'Student') {
+        Navigator.of(context).pushReplacementNamed('/home');
+      } else {
+        Navigator.of(context).pushReplacementNamed('/organizer-dashboard');
+      }
     }
   }
 
@@ -123,7 +127,51 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Email field
+                          // ── Role selector ────────────────────────────
+                          _FieldLabel(label: 'I am a'),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: ['Student', 'Organizer'].map((role) {
+                              final isSelected = _selectedRole == role;
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: GestureDetector(
+                                  onTap: () =>
+                                      setState(() => _selectedRole = role),
+                                  child: AnimatedContainer(
+                                    duration:
+                                        const Duration(milliseconds: 200),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: isSelected
+                                          ? AppColors.navy
+                                          : AppColors.background,
+                                      borderRadius:
+                                          BorderRadius.circular(20),
+                                      border: Border.all(
+                                        color: isSelected
+                                            ? AppColors.navy
+                                            : AppColors.outlineVariant,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      role,
+                                      style: textTheme.bodySmall?.copyWith(
+                                        color: isSelected
+                                            ? AppColors.white
+                                            : AppColors.textDark,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                          const SizedBox(height: 16),
+
+                          // ── Email field ──────────────────────────────
                           _FieldLabel(label: 'Email Address'),
                           const SizedBox(height: 8),
                           TextFormField(
@@ -136,14 +184,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               hintText: 'Enter your email',
                             ),
                             validator: (v) {
-                              if (v == null || v.isEmpty) return 'Email is required';
-                              if (!v.contains('@')) return 'Enter a valid email';
+                              if (v == null || v.isEmpty)
+                                return 'Email is required';
+                              if (!v.contains('@'))
+                                return 'Enter a valid email';
                               return null;
                             },
                           ),
                           const SizedBox(height: 16),
 
-                          // Password field
+                          // ── Password field ───────────────────────────
                           _FieldLabel(label: 'Password'),
                           const SizedBox(height: 8),
                           TextFormField(
@@ -165,13 +215,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             validator: (v) {
-                              if (v == null || v.isEmpty) return 'Password is required';
+                              if (v == null || v.isEmpty)
+                                return 'Password is required';
                               return null;
                             },
                           ),
                           const SizedBox(height: 8),
 
-                          // Forgot password
+                          // ── Forgot password ──────────────────────────
                           Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
@@ -190,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           const SizedBox(height: 8),
 
-                          // Log In button
+                          // ── Log In button ────────────────────────────
                           SizedBox(
                             width: double.infinity,
                             height: 48,
@@ -214,14 +265,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           const SizedBox(height: 16),
 
-                          // Divider
+                          // ── Divider ──────────────────────────────────
                           Row(
                             children: [
                               const Expanded(
-                                child: Divider(color: AppColors.outlineVariant),
+                                child: Divider(
+                                    color: AppColors.outlineVariant),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16),
                                 child: Text(
                                   'or',
                                   style: textTheme.labelSmall?.copyWith(
@@ -230,13 +283,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               const Expanded(
-                                child: Divider(color: AppColors.outlineVariant),
+                                child: Divider(
+                                    color: AppColors.outlineVariant),
                               ),
                             ],
                           ),
                           const SizedBox(height: 16),
 
-                          // Create account button
+                          // ── Create account button ────────────────────
                           SizedBox(
                             width: double.infinity,
                             height: 48,
@@ -283,8 +337,8 @@ class _FieldLabel extends StatelessWidget {
       child: Text(
         label,
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
-          color: AppColors.onSurfaceVariant,
-        ),
+              color: AppColors.onSurfaceVariant,
+            ),
       ),
     );
   }

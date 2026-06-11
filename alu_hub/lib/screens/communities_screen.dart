@@ -107,7 +107,9 @@ class _CommunitiesScreenState extends State<CommunitiesScreen>
             Navigator.pushReplacementNamed(context, '/explore-resources');
             break;
           case 2:
-            break; // already here
+            break; 
+          case 4:
+            Navigator.pushReplacementNamed(context, '/profile');
           // cases 3 & 4 when Passport and Profile are ready
         }
       },

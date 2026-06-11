@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'sign_up_interests_screen.dart';
+import 'organizer_dashboard_screen.dart';
 import '../theme/app_theme.dart';
 
 class SignUpIdentityScreen extends StatefulWidget {
@@ -21,9 +22,16 @@ class _SignUpIdentityScreenState extends State<SignUpIdentityScreen> {
   bool get _isStudent => selectedRole == 'Student';
 
   void _goNext() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const SignUpInterestsScreen()),
-    );
+    if (selectedRole == 'Organizer') {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const OrganizerDashboardScreen()),
+        (route) => false,
+      );
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const SignUpInterestsScreen()),
+      );
+    }
   }
 
   @override

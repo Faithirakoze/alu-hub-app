@@ -7,6 +7,11 @@ import 'screens/communities_screen.dart';
 import 'screens/sign_up_identity_screen.dart';
 import 'screens/sign_up_interests_screen.dart';
 import 'screens/explore_resources_screen.dart';
+import 'screens/organizer_dashboard_screen.dart';
+import 'screens/student_profile_screen.dart';
+import 'screens/organizer_post_screen.dart';
+import 'screens/organizer_community_screen.dart';
+import 'screens/organizer_profile_screen.dart';
 import 'theme/app_theme.dart';
 
 
@@ -34,7 +39,11 @@ class MyApp extends StatelessWidget {
         '/sign-up-interests': (context) => const SignUpInterestsScreen(),
         '/explore-resources': (context) => const ExploreResourcesScreen(selectedInterests: []),
         '/communities': (context) => const CommunitiesScreen(),
-
+        '/organizer-dashboard': (context) => const OrganizerDashboardScreen(),
+        '/organizer-post': (context) => const OrganizerPostScreen(),
+        '/profile': (context) => const StudentProfileScreen(),
+        '/organizer-communities': (context) => const OrganizerCommunityScreen(),
+        '/organizer-profile': (context) => const OrganizerProfileScreen(),
       },
     );
   }

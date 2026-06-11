@@ -457,7 +457,9 @@ class _ExploreResourcesScreenState extends State<ExploreResourcesScreen> {
             case 2:
               Navigator.pushReplacementNamed(context, '/communities');
               break;
-            // add cases for 3 (Passport) and 4 (Profile) when ready
+            case 4:
+              Navigator.pushReplacementNamed(context, '/profile');
+              break;
           }
         },
         items: const [
