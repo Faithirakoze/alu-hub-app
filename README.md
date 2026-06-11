@@ -62,35 +62,37 @@ Material Design
 # Project Structure
 
 
+```text
 alu_hub/lib/
-├── main.dart
-├── preview_main.dart
+├── main.dart                  # App entry point & routing
+├── preview_main.dart          # Development screen launcher
 ├── theme/
-│   └── app_theme.dart
-├── screens/
+│   └── app_theme.dart         # Unified Material Design theme
+├── screens/                   # UI Screens
 │   ├── welcome_screen.dart
 │   ├── login_screen.dart
 │   ├── signup_screen.dart
-│   ├── sign_up_identity_screen.dart
-│   ├── sign_up_interests_screen.dart
+│   ├── sign_up_identity_screen.dart   # Role & program selection
+│   ├── sign_up_interests_screen.dart  # Interest preferences
 │   ├── home_screen.dart
 │   ├── communities_screen.dart
-│   ├── community_directory_screen.dart
-│   ├── explore_resources_screen.dart
+│   ├── community_directory_screen.dart # Main community hub
+│   ├── explore_resources_screen.dart   # Resource links & deep integration
 │   ├── student_profile_screen.dart
-│   ├── organizer_dashboard_screen.dart
-│   ├── organizer_post_screen.dart
+│   ├── organizer_dashboard_screen.dart # Organizer analytics & stats
+│   ├── organizer_post_screen.dart      # Event/post creation
 │   ├── organizer_community_screen.dart
 │   ├── organizer_profile_screen.dart
 │   └── group_chat_screen.dart
-├── widgets/
+├── widgets/                   # Reusable UI components
 │   ├── community_app_bar.dart
 │   ├── section_header.dart
 │   └── community_list_item.dart
 ├── models/
-│   └── mock_data.dart
+│   └── mock_data.dart         # Demo data for development
 └── test/
     └── widget_test.dart
+```
 
 #  Minimum Requirements:
   
