@@ -2,6 +2,8 @@
 // The group chat screen — shows messages between community members.
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import '../widgets/chat_bubble.dart';
+import '../models/mock_data.dart';
 
 class GroupChatScreen extends StatefulWidget {
   // groupName: passed in from the community list so the AppBar shows the right title
@@ -87,7 +89,125 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
         ],
       ),
 
-      body: const Center(child: Text('Messages coming soon')),
+      body: Column(
+        children: [
+
+          // ── MESSAGE LIST ────────────────────────────────────────────────────
+          Expanded(
+            // ListView.builder: only builds the widgets that are visible on screen.
+            // More efficient than ListView with a fixed children list.
+            child: ListView.builder(
+              // reverse: true makes the list start from the bottom (newest messages at bottom)
+              // and scroll upward — this is standard for chat apps.
+              reverse: false,
+              padding: const EdgeInsets.only(top: 12, bottom: 8),
+              itemCount: mockChatMessages.length + 1, // +1 for the "Today" divider
+              itemBuilder: (context, index) {
+                // Show the date divider in the middle of the list (after index 2)
+                if (index == 3) {
+                  return _buildDateDivider('Today');
+                }
+                // Offset the index by 1 after the divider
+                final messageIndex = index > 3 ? index - 1 : index;
+                return ChatBubble(message: mockChatMessages[messageIndex]);
+              },
+            ),
+          ),
+
+          // ── MESSAGE INPUT BAR ────────────────────────────────────────────────
+          _buildMessageInput(),
+        ],
+      ),
+    );
+  }
+
+  // _buildDateDivider: the "Today" label that separates older and newer messages.
+  Widget _buildDateDivider(String label) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Row(
+        children: [
+          // Expanded + Divider fills the space to the left of the label
+          const Expanded(child: Divider(color: Color(0xFFC5C6CE))),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xFFEFEDF0),
+                borderRadius: BorderRadius.circular(999),
+              ),
+              child: Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.onSurfaceVariant,
+                ),
+              ),
+            ),
+          ),
+          const Expanded(child: Divider(color: Color(0xFFC5C6CE))),
+        ],
+      ),
+    );
+  }
+
+  // _buildMessageInput: the bar at the bottom with the text field and send button.
+  Widget _buildMessageInput() {
+    // _messageController reads and clears the text field
+    final controller = TextEditingController();
+
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      child: Row(
+        children: [
+
+          // + button for attachments
+          IconButton(
+            icon: const Icon(Icons.add_circle_outline, color: AppColors.onSurfaceVariant),
+            onPressed: () {},
+          ),
+
+          // Text field — Expanded fills remaining space between the two buttons
+          Expanded(
+            child: TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                hintText: 'Type a message...',
+                hintStyle: const TextStyle(color: AppColors.onSurfaceVariant),
+                filled: true,
+                fillColor: const Color(0xFFEFEDF0),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(24), // pill shape
+                  borderSide: BorderSide.none, // no visible border line
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 8),
+
+          // Send button — gold circle
+          GestureDetector(
+            onTap: () {
+              // send logic should come here
+              controller.clear();
+            },
+            child: Container(
+              width: 44,
+              height: 44,
+              decoration: const BoxDecoration(
+                color: AppColors.gold,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.send_rounded, color: Colors.white, size: 20),
+            ),
+          ),
+
+        ],
+      ),
     );
   }
 }
