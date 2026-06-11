@@ -7,6 +7,7 @@ import '../widgets/community_app_bar.dart';
 import '../widgets/section_header.dart';
 import '../widgets/community_list_item.dart';
 import 'group_chat_screen.dart';
+import 'passport_screen.dart';
 
 // StatefulWidget: this screen holds a TabController which changes state
 // (which tab is active), so it must be Stateful, not Stateless.
@@ -55,6 +56,15 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
   // _onNavItemTapped: called whenever a bottom nav item is tapped.
   // index is the position of the tapped item (0=Home, 1=Explore, 2=Communities, etc.)
   void _onNavItemTapped(int index) {
+    // index 3 = Passport tab — navigate to PassportScreen
+    if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const PassportScreen()),
+      );
+      return; // return early — don't call setState
+    }
+    // For all other tabs, just update the highlighted index
     setState(() {
       // setState() tells Flutter: "data changed, please redraw the widget".
       // Without setState, the gold highlight won't move to the tapped item.

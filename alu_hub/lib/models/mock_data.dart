@@ -254,3 +254,47 @@ const List<ChatMessage> mockChatMessages = [
     isRead: false,
   ),
 ];
+
+// ─────────────────────────────────────────────
+// JOURNEY ITEM MODEL
+// ─────────────────────────────────────────────
+
+// JourneyItem holds one entry in the student's timeline.
+class JourneyItem {
+  final String date;         // e.g. 'March 2024'
+  final String title;        // bold headline of the achievement
+  final String description;  // supporting detail text
+  final bool isHighlighted;  // true = gold dot, false = dark dot
+
+  const JourneyItem({
+    required this.date,
+    required this.title,
+    required this.description,
+    this.isHighlighted = false, // defaults to false if not passed
+  });
+}
+
+// mockJourneyItems: the list shown in the Journey timeline section.
+const List<JourneyItem> mockJourneyItems = [
+  JourneyItem(
+    date: 'March 2024',
+    title: 'Elected as SRC Finance Chair',
+    description: 'Led the budget committee for the annual pan-African conference.',
+    isHighlighted: true, // gold dot — most recent item
+  ),
+  JourneyItem(
+    date: 'January 2024',
+    title: 'Completed Data Science Internship',
+    description: '3-month placement at Liquid Intelligent Technologies.',
+  ),
+  JourneyItem(
+    date: 'November 2023',
+    title: 'Winner: ALU Innovation Hack',
+    description: 'Proposed a peer-to-peer textbook marketplace for students.',
+  ),
+  JourneyItem(
+    date: 'September 2023',
+    title: 'Joined ALU Peer Mentors',
+    description: 'Mentoring 5 first-year students on their leadership journey.',
+  ),
+];
