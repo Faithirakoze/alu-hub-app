@@ -316,7 +316,6 @@ class _OrganizerPostScreenState extends State<OrganizerPostScreen> {
       ),
       body: Column(
         children: [
-          // ── Search & filter header ──────────────────────────────
           Container(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
             color: AppColors.navy,
@@ -383,7 +382,6 @@ class _OrganizerPostScreenState extends State<OrganizerPostScreen> {
             ),
           ),
 
-          // ── Posts count ─────────────────────────────────────────
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Row(
@@ -400,7 +398,6 @@ class _OrganizerPostScreenState extends State<OrganizerPostScreen> {
             ),
           ),
 
-          // ── Posts list ──────────────────────────────────────────
           Expanded(
             child: posts.isEmpty
                 ? const Center(

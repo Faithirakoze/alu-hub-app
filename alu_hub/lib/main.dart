@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         '/explore-resources': (context) => const ExploreResourcesScreen(selectedInterests: []),
         '/communities': (context) => const CommunitiesScreen(),
         '/organizer-dashboard': (context) => const OrganizerDashboardScreen(),
-        '/organizer-post': (context) => const OrganizerPostScreen(),
+        '/organizer-posts': (context) => const OrganizerPostScreen(),
         '/profile': (context) => const StudentProfileScreen(),
         '/organizer-communities': (context) => const OrganizerCommunityScreen(),
         '/organizer-profile': (context) => const OrganizerProfileScreen(),
