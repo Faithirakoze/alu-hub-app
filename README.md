@@ -28,8 +28,11 @@ Material Design
 
 
 1. *Clone the repository*
+   
    git clone https://github.com/Faithirakoze/alu-hub-app.git
+   
    cd alu-hub-app/alu_hub
+   
     flutter pub get
    
  **iOS**:
