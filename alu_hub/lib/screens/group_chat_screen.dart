@@ -1,12 +1,10 @@
 // group_chat_screen.dart
-// The group chat screen — shows messages between community members.
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../widgets/chat_bubble.dart';
 import '../models/mock_data.dart';
 
 class GroupChatScreen extends StatefulWidget {
-  // groupName: passed in from the community list so the AppBar shows the right title
   final String groupName;
   const GroupChatScreen({super.key, required this.groupName});
 
@@ -15,119 +13,132 @@ class GroupChatScreen extends StatefulWidget {
 }
 
 class _GroupChatScreenState extends State<GroupChatScreen> {
+  // TextEditingController reads and clears the message input field
+  final TextEditingController _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Always dispose controllers to free memory
+    _messageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F3F5), // light grey page background
+      backgroundColor: const Color(0xFFF5F3F5),
 
-      // ── APP BAR ──────────────────────────────────────────────────────────
+      // ── APP BAR ────────────────────────────────────────────────────────
       appBar: AppBar(
         backgroundColor: AppColors.navy,
+        // titleSpacing 0 removes default padding so we control spacing ourselves
+        titleSpacing: 0,
 
-        // leading: the back arrow on the left.
-        // Navigator.pop(context) closes this screen and goes back to the previous one.
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
 
-        // title: avatar + group name + members online
+        // FIX: wrap the title Row in Flexible so it can shrink when space is tight
         title: Row(
           children: [
-            // Small circular avatar for the group
+            // Small group avatar circle
             CircleAvatar(
-              radius: 18,
+              radius: 16, // reduced from 18 to save space
               backgroundColor: AppColors.gold.withOpacity(0.3),
-              child: const Icon(Icons.groups, color: AppColors.gold, size: 20),
+              child: const Icon(Icons.groups, color: AppColors.gold, size: 18),
             ),
-            const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // widget.groupName accesses the groupName field from the StatefulWidget
-                Text(
-                  widget.groupName,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+            const SizedBox(width: 8),
+
+            // FIX: Flexible allows this Column to shrink if the Row runs out of space
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // widget.groupName accesses the field from the StatefulWidget
+                  Text(
+                    widget.groupName,
+                    style: const TextStyle(
+                      fontSize: 14, // reduced from 15 to prevent overflow
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                    // overflow ellipsis cuts off text with "..." if still too long
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
-                ),
-                // Members online indicator
-                Row(
-                  children: [
-                    // Green dot = online indicator
-                    Container(
-                      width: 8, height: 8,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF4CAF50), // green
-                        shape: BoxShape.circle,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Green online indicator dot
+                      Container(
+                        width: 7, height: 7,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF4CAF50),
+                          shape: BoxShape.circle,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 4),
-                    const Text(
-                      '12 Members Online',
-                      style: TextStyle(fontSize: 11, color: Colors.white70),
-                    ),
-                  ],
-                ),
-              ],
+                      const SizedBox(width: 4),
+                      const Text(
+                        '12 Members Online',
+                        style: TextStyle(fontSize: 10, color: Colors.white70),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
 
-        // actions: buttons on the right of the AppBar
         actions: [
           IconButton(
             icon: const Icon(Icons.videocam_outlined, color: Colors.white),
-            onPressed: () {}, // placeholder
+            onPressed: () {},
           ),
           IconButton(
             icon: const Icon(Icons.more_vert, color: Colors.white),
-            onPressed: () {}, // placeholder
+            onPressed: () {},
           ),
         ],
       ),
 
+      // ── BODY ────────────────────────────────────────────────────────────
       body: Column(
         children: [
 
-          // ── MESSAGE LIST ────────────────────────────────────────────────────
+          // Message list — Expanded fills all space above the input bar
           Expanded(
-            // ListView.builder: only builds the widgets that are visible on screen.
-            // More efficient than ListView with a fixed children list.
             child: ListView.builder(
-              // reverse: true makes the list start from the bottom (newest messages at bottom)
-              // and scroll upward — this is standard for chat apps.
-              reverse: false,
               padding: const EdgeInsets.only(top: 12, bottom: 8),
-              itemCount: mockChatMessages.length + 1, // +1 for the "Today" divider
+              // +1 for the "Today" date divider
+              itemCount: mockChatMessages.length + 1,
               itemBuilder: (context, index) {
-                // Show the date divider in the middle of the list (after index 2)
-                if (index == 3) {
-                  return _buildDateDivider('Today');
-                }
-                // Offset the index by 1 after the divider
-                final messageIndex = index > 3 ? index - 1 : index;
-                return ChatBubble(message: mockChatMessages[messageIndex]);
+                // Show date divider after the 3rd message (index 3)
+                if (index == 3) return _buildDateDivider('Today');
+                // Offset index by 1 after the divider position
+                final msgIndex = index > 3 ? index - 1 : index;
+                return ChatBubble(message: mockChatMessages[msgIndex]);
               },
             ),
           ),
 
-          // ── MESSAGE INPUT BAR ────────────────────────────────────────────────
+          // Message input bar pinned at the bottom
           _buildMessageInput(),
         ],
       ),
     );
   }
 
-  // _buildDateDivider: the "Today" label that separates older and newer messages.
+  // ── DATE DIVIDER ────────────────────────────────────────────────────────
+  // The "Today" pill label that separates older and newer messages
   Widget _buildDateDivider(String label) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Row(
         children: [
-          // Expanded + Divider fills the space to the left of the label
+          // Line to the left of the label
           const Expanded(child: Divider(color: Color(0xFFC5C6CE))),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -146,41 +157,55 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
               ),
             ),
           ),
+          // Line to the right of the label
           const Expanded(child: Divider(color: Color(0xFFC5C6CE))),
         ],
       ),
     );
   }
 
-  // _buildMessageInput: the bar at the bottom with the text field and send button.
+  // ── MESSAGE INPUT BAR ───────────────────────────────────────────────────
   Widget _buildMessageInput() {
-    // _messageController reads and clears the text field
-    final controller = TextEditingController();
-
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      // SafeArea bottom: true ensures the bar sits above the device home bar
+      padding: EdgeInsets.only(
+        left: 8,
+        right: 8,
+        top: 8,
+        // MediaQuery.of(context).viewInsets.bottom handles keyboard popping up
+        bottom: 8 + MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: Row(
         children: [
 
-          // + button for attachments
+          // Attachment button
           IconButton(
-            icon: const Icon(Icons.add_circle_outline, color: AppColors.onSurfaceVariant),
+            icon: const Icon(
+              Icons.add_circle_outline,
+              color: AppColors.onSurfaceVariant,
+            ),
             onPressed: () {},
           ),
 
-          // Text field — Expanded fills remaining space between the two buttons
+          // Text input — Expanded takes all remaining space between the buttons
           Expanded(
             child: TextField(
-              controller: controller,
+              controller: _messageController,
               decoration: InputDecoration(
                 hintText: 'Type a message...',
-                hintStyle: const TextStyle(color: AppColors.onSurfaceVariant),
+                hintStyle: const TextStyle(
+                  color: AppColors.onSurfaceVariant,
+                  fontSize: 14,
+                ),
                 filled: true,
                 fillColor: const Color(0xFFEFEDF0),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(24), // pill shape
+                  borderRadius: BorderRadius.circular(24),
                   borderSide: BorderSide.none, // no visible border line
                 ),
               ),
@@ -192,8 +217,8 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
           // Send button — gold circle
           GestureDetector(
             onTap: () {
-              // send logic should come here
-              controller.clear();
+              // Clear the field on send — real send logic goes here later
+              _messageController.clear();
             },
             child: Container(
               width: 44,
@@ -202,7 +227,11 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                 color: AppColors.gold,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.send_rounded, color: Colors.white, size: 20),
+              child: const Icon(
+                Icons.send_rounded,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
           ),
 
