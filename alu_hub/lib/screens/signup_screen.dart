@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 
 class SignupAccountScreen extends StatefulWidget {
@@ -30,7 +29,8 @@ class _SignupAccountScreenState extends State<SignupAccountScreen> {
 
   void _onNext() {
     if (_formKey.currentState?.validate() ?? false) {
-      // TODO: navigate to SignupIdentityScreen (Step 2 of 3)
+      // After creating an account, start the onboarding at identity step
+      Navigator.of(context).pushReplacementNamed('/sign-up-identity');
     }
   }
 
@@ -117,7 +117,7 @@ class _SignupAccountScreenState extends State<SignupAccountScreen> {
                         color: AppColors.onSurface,
                       ),
                       decoration: const InputDecoration(
-                        hintText: 'student@alueducation.com',
+                        hintText: 'Enter your email',
                         prefixIcon: Icon(Icons.school_outlined),
                       ),
                       validator: (v) {

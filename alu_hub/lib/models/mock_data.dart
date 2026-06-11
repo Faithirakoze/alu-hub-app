@@ -14,7 +14,7 @@ class Opportunity {
   final String description;
   final String organizer;
   final String actionLabel; 
-  final int registeredCount;
+  int registeredCount;
   final int totalSlots;
   final List<String> tags;
   final String tier;
@@ -33,7 +33,6 @@ class Opportunity {
     required this.registeredCount,
     required this.totalSlots,
     required this.tags,
-    this.tier = '',
     this.isBookmarked = false,
     this.hasRSVPd = false,
   });
@@ -181,7 +180,7 @@ const List<CommunityPost> mockCommunityPosts = [
     authorRole: 'STUDENT',
     timeAgo: '3 hours ago',
     content: 'Just finished the Flutter workshop. Honestly, one of the best sessions this semester. '
-        'Highly recommend everyone to attend the next one!',
+      'Big thanks to the facilitators',
     likes: 19,
     comments: 7,
     isPinned: false,
