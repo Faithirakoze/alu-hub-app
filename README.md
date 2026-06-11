@@ -12,7 +12,7 @@ ALU students usually get to know about opportunities through Email and WhatsApp 
 
 
 
-## 🎯 Key Features
+## Key Features
 
 ### For Students
 - *Authentication & Onboarding*: Secure sign-up with role selection, interest preferences, and academic profile setup
@@ -64,32 +64,32 @@ Material Design
 
 ```text
 alu_hub/lib/
-├── main.dart                  # App entry point & routing
-├── preview_main.dart          # Development screen launcher
+├── main.dart                  
+├── preview_main.dart          
 ├── theme/
-│   └── app_theme.dart         # Unified Material Design theme
-├── screens/                   # UI Screens
+│   └── app_theme.dart         
+├── screens/                   
 │   ├── welcome_screen.dart
 │   ├── login_screen.dart
 │   ├── signup_screen.dart
-│   ├── sign_up_identity_screen.dart   # Role & program selection
-│   ├── sign_up_interests_screen.dart  # Interest preferences
+│   ├── sign_up_identity_screen.dart   
+│   ├── sign_up_interests_screen.dart  
 │   ├── home_screen.dart
 │   ├── communities_screen.dart
-│   ├── community_directory_screen.dart # Main community hub
-│   ├── explore_resources_screen.dart   # Resource links & deep integration
+│   ├── community_directory_screen.dart 
+│   ├── explore_resources_screen.dart   
 │   ├── student_profile_screen.dart
-│   ├── organizer_dashboard_screen.dart # Organizer analytics & stats
-│   ├── organizer_post_screen.dart      # Event/post creation
+│   ├── organizer_dashboard_screen.dart 
+│   ├── organizer_post_screen.dart      
 │   ├── organizer_community_screen.dart
 │   ├── organizer_profile_screen.dart
 │   └── group_chat_screen.dart
-├── widgets/                   # Reusable UI components
+├── widgets/                   
 │   ├── community_app_bar.dart
 │   ├── section_header.dart
 │   └── community_list_item.dart
 ├── models/
-│   └── mock_data.dart         # Demo data for development
+│   └── mock_data.dart         
 └── test/
     └── widget_test.dart
 ```
