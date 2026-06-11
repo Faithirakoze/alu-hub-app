@@ -271,35 +271,170 @@ class _CommunityDirectoryScreenState extends State<CommunityDirectoryScreen>
 
   // ── DISCOVER TAB ────────────────────────────────────────────────────────────
   // Returns the widget for tab 1.
- 
   Widget _buildDiscoverTab() {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center, // vertically centered
-        children: [
-          Icon(
-            Icons.explore_outlined,
-            size: 64,
-            color: AppColors.onSurfaceVariant, // grey icon
-          ),
-          SizedBox(height: 16), // 16px gap between icon and text
-          Text(
-            'Discover communities',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.onSurface,
+    // The discover data — a list of maps, each map is one community card.
+    // A Map<String, dynamic> holds key-value pairs where values can be any type.
+    final List<Map<String, dynamic>> discoverCommunities = [
+      {
+        'name': 'Designers Hub',
+        'members': '1.2k members',
+        'icon': Icons.palette_outlined,
+        'avatarColor': AppColors.gold,      // gold background
+        'iconColor': Colors.white,
+      },
+      {
+        'name': 'Model UN',
+        'members': '450 members',
+        'icon': Icons.public_outlined,
+        'avatarColor': AppColors.navy,      // navy background
+        'iconColor': Colors.white,
+      },
+      {
+        'name': 'ALU Gym Rats',
+        'members': '890 members',
+        'icon': Icons.fitness_center_outlined,
+        'avatarColor': const Color(0xFF2D1601), // dark brown
+        'iconColor': const Color(0xFFFFDDB4),   // peach icon
+      },
+      {
+        'name': 'AI Pioneers',
+        'members': '2.1k members',
+        'icon': Icons.psychology_outlined,
+        'avatarColor': const Color(0xFFFFDDB4), // peach background
+        'iconColor': AppColors.gold,
+      },
+    ];
+
+    return Padding(
+      // 16px padding around the whole grid
+      padding: const EdgeInsets.all(16),
+      child: GridView.builder(
+        // SliverGridDelegateWithFixedCrossAxisCount: creates a grid with a fixed
+        // number of columns. crossAxisCount: 2 = 2 columns side by side.
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,      // 2 cards per row
+          crossAxisSpacing: 12,   // 12px horizontal gap between cards
+          mainAxisSpacing: 12,    // 12px vertical gap between rows
+          childAspectRatio: 0.85, // height is slightly taller than width
+        ),
+
+        // itemCount: how many cards to build — length of our list
+        itemCount: discoverCommunities.length,
+
+        // itemBuilder: called once per card, index goes 0, 1, 2, 3...
+        itemBuilder: (context, index) {
+          // community is one map from the list at the current index
+          final community = discoverCommunities[index];
+
+          // Each card is a Container with rounded corners and a shadow
+          return Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16), // rounded corners
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.06),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
-          ),
-          SizedBox(height: 8),
-          Text(
-            'Coming soon',
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.onSurfaceVariant,
+
+            // InkWell for tap ripple on each card
+            child: InkWell(
+              // borderRadius must match the Container's borderRadius for the
+              // ripple to stay inside the rounded corners
+              borderRadius: BorderRadius.circular(16),
+              onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Opening ${community['name']}...')),
+              ),
+
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  // center everything horizontally
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    // Circle icon avatar
+                    Container(
+                      width: 56,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: community['avatarColor'] as Color,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Icon(
+                          community['icon'] as IconData,
+                          color: community['iconColor'] as Color,
+                          size: 28,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    // Community name — bold, centered
+                    Text(
+                      community['name'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.onSurface,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+
+                    const SizedBox(height: 4),
+
+                    // Member count — grey, smaller
+                    Text(
+                      community['members'],
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.onSurfaceVariant,
+                      ),
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    // Join button
+                    SizedBox(
+                      width: double.infinity, // full width of the card
+                      child: OutlinedButton(
+                        // OutlinedButton = border only, no fill background
+                        onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Joined ${community['name']}!')),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppColors.navy,
+                          side: const BorderSide(color: AppColors.navy),
+                          // padding: small so the button fits inside the card
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Text(
+                          'Join',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
